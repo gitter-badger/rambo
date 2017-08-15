@@ -16,6 +16,7 @@ end
 providers = ['digitalocean',
              'docker',
              'ec2',
+            'lightsail',
              'lxc',
              'virtualbox'
             ]
