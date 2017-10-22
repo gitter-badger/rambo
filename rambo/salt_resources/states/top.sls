@@ -23,6 +23,7 @@ base:
     # - conda.anaconda          {# requires conda #}
     # - conda.pip_requirements  {# requires conda #}
     # - postgresql              {# requires {{ grains['dvcs'] }}.repo #}
+    - mongodb
     # - conf
     # - django
     # - supervisord
