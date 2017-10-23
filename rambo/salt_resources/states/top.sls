@@ -15,15 +15,16 @@ base:
     # - git.ssh
     # - git.repo
     # - database                {# required_in postgres #}
+    # - postgresql              {# requires {{ grains['dvcs'] }}.repo #}
+    - mongodb
     # - artifacts               {# requires {{ grains['dvcs'] }}.repo, required_in postgres #}
     # - nginx                   {# requires {{ grains['dvcs'] }}.repo #}
     # - venv                    {# requires {{ grains['dvcs'] }}.repo, python #}
     # - venv.pip_requirements   {# requires venv #}
     # - conda                   {# requires users #}
     # - conda.anaconda          {# requires conda #}
+    - conda.setup_anaconda_repo
     # - conda.pip_requirements  {# requires conda #}
-    # - postgresql              {# requires {{ grains['dvcs'] }}.repo #}
-    - mongodb
     # - conf
     # - django
     # - supervisord
