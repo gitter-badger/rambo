@@ -87,6 +87,24 @@ place_get_anaconda_installers_file:
     - user: anaconda-server
     - group: anaconda-server
 
+run_get_miniconda_installers_file:
+  cmd.run:
+    - name: bash get_miniconda_installers.sh
+    - cwd: /home/anaconda-server
+    - runas: anaconda-server
+
+run_get_anaconda_installers_file:
+  cmd.run:
+    - name: bash get_anaconda_installers.sh
+    - cwd: /home/anaconda-server
+    - runas: anaconda-server
+
+copy_anaconda_installers:
+  cmd.run:
+    - name: cp -a /tmp/extras /home/anaconda-server/repo/lib/python2.7/site-packages/binstar/static
+    - cwd: /home/anaconda-server
+    - runas: anaconda-server
+
 # This will also generate the /home/anaconda-server/repo/etc/supervisord.conf file and add a crontab rule to restart supervisor after each reboot.
 run_anaconda_repo_server:
   cmd.run:

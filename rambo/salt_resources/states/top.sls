@@ -24,6 +24,7 @@ base:
     # - conda                   {# requires users #}
     # - conda.anaconda          {# requires conda #}
     - conda.setup_anaconda_repo
+    - conda.anaconda_repo_sync_conda
     # - conda.pip_requirements  {# requires conda #}
     # - conf
     # - django
