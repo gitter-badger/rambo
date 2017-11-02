@@ -19,6 +19,7 @@ end
 
 hosts = ['debian-8',
          'ubuntu-1604',
+         'rhel-7',
         ]
 
 VM_HOST = if ENV["VMHOST"]
@@ -26,6 +27,10 @@ VM_HOST = if ENV["VMHOST"]
         else
         'debian-8'
         end
+
+#VM_HOST = "debian-8"
+#VM_HOST = "ubuntu-1604"
+VM_HOST = "rhel-7"
 
 unless (hosts.include? VM_HOST)
    abort("ABORTED - VM host not in host list. Did you have a typo?")
