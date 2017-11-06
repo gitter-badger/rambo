@@ -2,10 +2,12 @@ import os
 import sys
 import time
 import json
+import base64
 from threading import Thread
 
 import click
 from bash import bash
+from jinja2 import Environment, FileSystemLoader
 
 from rambo.utils import get_user_home, set_env_var, get_env_var, dir_exists, dir_create, dir_delete, file_delete
 from rambo.scripts import install_lastpass
@@ -181,6 +183,23 @@ def setup_lastpass():
     thread = Thread(target = setup_lastpass_thread)
     thread.start()
     follow_log_file(get_user_home() + '/.tmp-common/install-lastpass-log', ['one installing lastpass'])
+
+def export_bash():
+    dir_create('.tmp/build/bash')
+    #bash('git clone https://github.com/saltstack/salt.git .tmp/build/bash/salt')
+    #bash('virtualenv .tmp/build/bash/venv -p python3 --always-copy')
+    #bash('virtualenv .tmp/build/bash/venv --relocatable')
+    bash('tar -zcvf .tmp/build/bash/venv.tar.gz .tmp/build/bash/venv')
+    with open('.tmp/build/bash/venv.tar.gz', 'rb') as myfile:
+        data=myfile.read()
+        encoded = base64.b64encode(data).decode('UTF-8')
+
+    env = Environment(loader=FileSystemLoader('rambo/templates'))
+    template = env.get_template('bash/test.sh')
+    output_from_parsed_template = template.render(foo=encoded)
+
+    with open('.tmp/build/bash/installer.sh', 'w') as file_obj:
+        file_obj.write(output_from_parsed_template)
 
 
 class Run_app():

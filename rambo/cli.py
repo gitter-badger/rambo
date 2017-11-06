@@ -4,7 +4,7 @@ import json
 import click
 from bash import bash
 
-from rambo.app import vagrant_up, vagrant_ssh, vagrant_destroy, set_init_vars, set_vagrant_vars
+from rambo.app import vagrant_up, vagrant_ssh, vagrant_destroy, set_init_vars, set_vagrant_vars, export_bash
 
 ## GLOBALS
 # Create env var indicating where this code lives. This will be used latter by
@@ -83,5 +83,11 @@ def setup(): # threaded setup commands
     '''
     # setup_rambo()
     setup_lastpass()
+
+@cli.command()
+def exportbash():
+    '''Exports a bash file with salt all wraped up in it
+    '''
+    export_bash()
 
 main = cli
