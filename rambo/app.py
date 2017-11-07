@@ -81,13 +81,14 @@ def vagrant_up_thread():
     # TODO: Better logs.
     bash('vagrant up >' + get_env_var('TMP') + '/logs/vagrant-up-log 2>&1')
 
-def vagrant_up(ctx=None, provider=None, vagrant_cwd=None, vagrant_dotfile_path=None):
+def vagrant_up(ctx=None, provider=None, guest_os=None, vagrant_cwd=None, vagrant_dotfile_path=None):
     '''Start a VM / container with `vagrant up`.
     All str args can also be set as an environment variable; arg takes precedence.
 
     Agrs:
         ctx (object): Click Context object. Used to detect if CLI is used.
         provider (str): Sets provider used.
+        guest_os (str): Sets OS used for VM's guest.
         vagrant_cwd (str): Location of `Vagrantfile`.
         vagrant_dotfile_path (str): Location of `.vagrant` metadata directory.
     '''
@@ -108,9 +109,13 @@ def vagrant_up(ctx=None, provider=None, vagrant_cwd=None, vagrant_dotfile_path=N
                  ' variable, and is not in the providers list. Did you '
                  'have a typo?' % provider)
 
+    if guest_os:
+        set_env_var('guest_os', guest_os)
+
     if not dir_exists(get_env_var('TMP')):
         dir_create(get_env_var('TMP'))
     dir_create(get_env_var('TMP') + '/logs')
+
     # TODO: Better logs.
     open(get_env_var('TMP') + '/logs/vagrant-up-log','w').close() # Create log file. Vagrant will write to it, we'll read it.
 
@@ -119,7 +124,8 @@ def vagrant_up(ctx=None, provider=None, vagrant_cwd=None, vagrant_dotfile_path=N
     follow_log_file(get_env_var('TMP') + '/logs/vagrant-up-log', ['Total run time:',
                                                  'Provisioners marked to run always will still run',
                                                  'Print this help',
-                                                 'try again.'])
+                                                 'try again.',
+                                                 'Actual name:'])
     click.echo('Up complete.')
 
 def vagrant_ssh(ctx=None, vagrant_cwd=None, vagrant_dotfile_path=None):
